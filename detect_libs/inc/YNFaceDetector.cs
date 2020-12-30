@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -10,13 +8,11 @@ namespace TestDemo
 {
     class YNFaceDetector : IDisposable
     {
-        private const String PART_KEY = "518FA72B-9851-40B3-AD30-8661D9190308";
-        private const String ALL_KEY = "592100DC-905B-4B94-8101-3E2AF63F5831";
 
         IntPtr mHandle = IntPtr.Zero;
         public YNFaceDetector()
         {
-            mHandle = YNFaceDetector_Initialize(ALL_KEY);
+            mHandle = YNFaceDetector_Initialize(0);
         }
 
         ~YNFaceDetector()
@@ -70,7 +66,7 @@ namespace TestDemo
         }
 
         [DllImport("Alignment.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.None, ExactSpelling = true)]
-        private static extern IntPtr YNFaceDetector_Initialize(String key);
+        private static extern IntPtr YNFaceDetector_Initialize(Int32 config);
 
         [DllImport("Alignment.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.None, ExactSpelling = true)]
         private static extern void YNFaceDetector_Unintialize(IntPtr handle);

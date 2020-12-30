@@ -16,12 +16,12 @@
 *
 *---------------------------------------------------------------------------------------------*/
 /*****************************************************************************
-Copyright:    www.xiusdk.cn
+Copyright:    www.xiusdk.cn(all rights reserved)
 File name:    YNFaceDetector.h
-Description:  �����ؼ��㶨λ
+Description:  人脸关键点定位
 Author:       xiusdk
-Version:      V1.0
-Date:         20190101-20201230
+Version:      V1.2
+qq group:     567648913(加群获取最新信息)
 *****************************************************************************/
 
 #ifndef YN_FACE_DETECTOR_H_
@@ -29,19 +29,16 @@ Date:         20190101-20201230
  
 #include "YNTypes.h"
 
-typedef struct YNFaceDetector YNFaceDetector;
-typedef YNFaceDetector* YNFaceDetectorRef;
-
 
 /*************************************************
 Function:    YNFaceDetector_Initialize
 Description: create face detection instance
-Input:   "592100DC-905B-4B94-8101-3E2AF63F5831"
+Input:   thread num
 Output:  none
 Return:  YNFaceDetectorRef handle
 Others:  none.
 *************************************************/
-YN_SDK_API YNFaceDetectorRef YNFaceDetector_Initialize(const char* key);
+YN_SDK_API YNHandle YNFaceDetector_Initialize(int config);
 
 
 /*************************************************
@@ -52,7 +49,7 @@ Output:  none
 Return:  none
 Others:  none.
 *************************************************/
-YN_SDK_API YNVOID  YNFaceDetector_Unintialize(YNFaceDetectorRef handle);
+YN_SDK_API void  YNFaceDetector_Unintialize(YNHandle handle);
 
 
 /*************************************************
@@ -64,7 +61,7 @@ Output: none
 Return:      YNRESULT
 Others:      none.
 *************************************************/
-YN_SDK_API YNRESULT YNFaceDetector_loadModels(YNFaceDetectorRef handle, const char* alignModel);
+YN_SDK_API int YNFaceDetector_loadModels(YNHandle handle, const char* alignModel);
 
 
 /*************************************************
@@ -82,21 +79,19 @@ faceCount: return face count
 Return:      YNRESULT
 Others:      none.
 *************************************************/
-YN_SDK_API YNRESULT YNFaceDetector_Align(YNFaceDetectorRef handle, const unsigned char* image, int width, int height, int stride,
-	int format, int orientation, YNFaces** faces, int* faceCount);
+YN_SDK_API int YNFaceDetector_Align(YNHandle handle, const unsigned char* image, int width, int height, int stride,
+	YN_PIXEL_FORMAT format, YN_ROTATION_TYPE orientation, YNFaces** faces, int* faceCount);
+
+/*
+detect face with image buffer
+param:
+handle: handle created by YNFaceDetector_Initialize
+image: image buffer with BGRA 4 channels
+with,height,stride: image info
+result: return face detect result
+faceCount: return face count
+*/
 
 
-/*************************************************
-c-example:
-YNFaceDetectorRef handle = YNFaceDetector_Initialize("592100DC-905B-4B94-8101-3E2AF63F5831");
-YNFaceDetector_loadModels(handle, "/your/path/of/yn_model_detect.tar");
-YNFaces* faces = NULL; 
-int faceCount = 0;
-YNFaceDetector_Align(handle, image_buffer, width, height, stride, YN_PIX_FMT_BGRA8888, YN_CLOCKWISE_ROTATE_0, &faces, &faceCount);
-for(int i = 0; i < faceCount; i++){
-   YNFaces& face = faces[i]; // get detected face info
-}
-YNFaceDetector_Unintialize(handle);
-*************************************************/
 
 #endif//YN_FACE_DETECTOR_H_

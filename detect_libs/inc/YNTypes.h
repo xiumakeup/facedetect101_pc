@@ -16,12 +16,12 @@
 *
 *---------------------------------------------------------------------------------------------*/
 /*****************************************************************************
-Copyright:    www.xiusdk.cn
+Copyright:    www.xiusdk.cn(all rights reserved)
 File name:    YNTypes.h
 Description:  人脸关键点定位
 Author:       xiusdk
-Version:      V1.0
-Date:         20190101-20201230
+Version:      V1.2
+qq group:     567648913(加群获取最新信息)
 *****************************************************************************/
 #ifndef YN_TYPES_H_
 #define YN_TYPES_H_
